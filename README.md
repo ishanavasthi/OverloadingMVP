@@ -20,6 +20,14 @@ Overloading is a small 3D Unity truck simulator prototype built for a game jam. 
 | `D` | Steer right |
 | `R` | Restart |
 
+## Mechanics
+
+All game mechanics are cataloged in [**MECHANICS.md**](MECHANICS.md). Currently registered:
+
+| Mechanic | Description |
+|---|---|
+| **Overloading** | Top-heavy truck balancing — raised center of mass, lateral tip forces, and steering roll torque create an unstable driving challenge |
+
 ## Unity Version
 
 This project was developed with Unity `6000.4.3f1`.
@@ -66,27 +74,15 @@ To upload to itch.io:
 Assets/
 ├── Runtime/
 │   └── Mechanic/
-│       └── Overloading/
-│           ├── Scripts/
-│           │   ├── CameraFollow.cs
-│           │   ├── FinishLine.cs
-│           │   ├── GameManager.cs
-│           │   ├── HazardZone.cs
-│           │   └── TruckController.cs
-│           └── Script_Explainers/
-│               ├── CameraFollow_Explainer.md
-│               ├── FinishLine_Explainer.md
-│               ├── GameManager_Explainer.md
-│               ├── HazardZone_Explainer.md
-│               └── TruckController_Explainer.md
+│       └── <Mechanic_Name>/
+│           ├── Scripts/            ← Runtime gameplay scripts
+│           └── Script_Explainers/  ← Markdown docs explaining each script
 ├── Sample/
-│   └── Overloading/
-│       └── OverloadingTruck.zip
-├── Editor/
-│   ├── Phase1SceneBuilder.cs
-│   └── WebGLBuild.cs
-└── Scenes/
-    └── SampleScene.unity
+│   └── <Mechanic_Name>/
+│       └── <Mechanic_Zip>.zip     ← Playable sample / build artifact
+│       └── <Videos_Zip>.zip     ← Demo Video & Scripts Explained
+├── Editor/                         ← Editor-only tooling scripts
+└── Scenes/                         ← Unity scene files
 ```
 
 ## Main Scripts
@@ -98,6 +94,88 @@ Assets/
 - `CameraFollow.cs` provides a simple chase camera.
 - `Phase1SceneBuilder.cs` creates and wires the complete MVP scene from the Unity editor.
 - `WebGLBuild.cs` builds the browser-playable WebGL version for itch.io.
+
+## Contributing
+
+### Prerequisites
+
+- Unity **6000.4.3f1** (install via Unity Hub)
+- Git
+
+### Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ishanavasthi/OverloadingMVP.git
+   cd OverloadingMVP
+   ```
+
+2. **Open in Unity Hub**
+   - Click *Open* → select the cloned folder.
+   - Unity will import assets and regenerate project files automatically.
+
+3. **Open the scene**
+   - Navigate to `Assets/Scenes/SampleScene.unity` and double-click it.
+
+4. **Press Play** to verify everything works.
+
+### Adding a New Mechanic
+
+Follow this folder structure **strictly**:
+
+```text
+Assets/
+├── Runtime/
+│   └── Mechanic/
+│       └── <Your_Mechanic_Name>/
+│           ├── Scripts/            ← Your runtime .cs files go here
+│           └── Script_Explainers/  ← One .md explainer per script
+├── Sample/
+│   └── <Your_Mechanic_Name>/
+│       └── <Mechanic_Zip>.zip     ← Playable demo or build artifact
+```
+
+**Step-by-step:**
+
+1. **Create your mechanic folder**
+   - Under `Assets/Runtime/Mechanic/`, create a folder named after your mechanic (e.g., `Drifting`).
+   - Inside it, create `Scripts/` and `Script_Explainers/` subfolders.
+
+2. **Write your scripts**
+   - Place all runtime `.cs` files in `Scripts/`.
+   - Editor-only scripts (if any) go in `Assets/Editor/`.
+
+3. **Write script explainers**
+   - For each `.cs` file, create a matching `<ScriptName>_Explainer.md` in `Script_Explainers/`.
+   - Document the purpose, how it works, key methods, serialized fields, and public API.
+
+4. **Add a sample**
+   - Under `Assets/Sample/<Your_Mechanic_Name>/`, place a `.zip` of a playable build or demo scene.
+
+5. **Register your mechanic**
+   - Open [MECHANICS.md](MECHANICS.md).
+   - Add a row to the **Registered Mechanics** table.
+   - Add a detailed section for your mechanic below the table (core idea, how it works, folder structure, tuning parameters, dependencies).
+
+6. **Test**
+   - Open `SampleScene.unity` and press Play.
+   - Verify your mechanic works and doesn't break existing mechanics.
+   - If you have a WebGL build, test with `Overloading > Build WebGL`.
+
+7. **Commit and push**
+   ```bash
+   git add -A
+   git commit -m "Add <Your_Mechanic_Name> mechanic"
+   git push origin main
+   ```
+
+### Code Guidelines
+
+- Use `[SerializeField]` for Inspector-exposed fields; keep them `private`.
+- Use `[RequireComponent]` to declare hard component dependencies.
+- Use `FindAnyObjectByType<T>()` as a fallback for unassigned references, not as the primary wiring strategy.
+- Keep runtime scripts in `Runtime/Mechanic/<Name>/Scripts/` — never in `Assets/Editor/`.
+- All editor-only code must go in `Assets/Editor/` or be wrapped in `#if UNITY_EDITOR`.
 
 ## Design Notes
 
