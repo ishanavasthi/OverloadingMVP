@@ -64,17 +64,29 @@ To upload to itch.io:
 
 ```text
 Assets/
-+-- Editor/
-|   +-- Phase1SceneBuilder.cs
-|   +-- WebGLBuild.cs
-+-- Scenes/
-|   +-- SampleScene.unity
-+-- Scripts/
-    +-- CameraFollow.cs
-    +-- FinishLine.cs
-    +-- GameManager.cs
-    +-- HazardZone.cs
-    +-- TruckController.cs
+├── Runtime/
+│   └── Mechanic/
+│       └── Overloading/
+│           ├── Scripts/
+│           │   ├── CameraFollow.cs
+│           │   ├── FinishLine.cs
+│           │   ├── GameManager.cs
+│           │   ├── HazardZone.cs
+│           │   └── TruckController.cs
+│           └── Script_Explainers/
+│               ├── CameraFollow_Explainer.md
+│               ├── FinishLine_Explainer.md
+│               ├── GameManager_Explainer.md
+│               ├── HazardZone_Explainer.md
+│               └── TruckController_Explainer.md
+├── Sample/
+│   └── Overloading/
+│       └── OverloadingTruck.zip
+├── Editor/
+│   ├── Phase1SceneBuilder.cs
+│   └── WebGLBuild.cs
+└── Scenes/
+    └── SampleScene.unity
 ```
 
 ## Main Scripts

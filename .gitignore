@@ -55,3 +55,6 @@ Desktop.ini
 *.7z
 *.rar
 
+# Allow sample mechanic zips
+!Assets/Sample/**/*.zip
+
